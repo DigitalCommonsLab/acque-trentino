@@ -32,11 +32,11 @@ var map = new L.Map('map', {
 		layers: L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
 	});
 
-	var url = "https://api.apify.com/v1/execs/KTFWTkmxttzFs4SgH/results";
+	var url = "https://api.apify.com/v1/execs/KTFWTkmxttzFs4SgH/results?simplified=1";
 var geo;
 	$.getJSON(url, function(json) {
 
-		var data = json[0].pageFunctionResult
+		var data = json[0];
 
 		geo = L.geoJSON(null,{
 				pointToLayer: function(f, latlng) {
