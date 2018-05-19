@@ -9,10 +9,13 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet-panel-layers@1.2.2/dist/leaflet-panel-layers.min.css" />
 
 <style type="text/css">
+body,html {
+	margin: 0;
+}
 #map {
 	position: absolute;
 	width: 100%;
-	height: 100%;
+	height: 85%;
 }
 .leaflet-panel-layers-item{
 	font-size: 14px;
@@ -25,7 +28,7 @@
 </style>
 </head> 	
 <body>
-	<h4>Componsizione Elementi nelle Acque del Comune di Trento</h4>
+	<h4>Componsizione Elementi nelle Acque del Comune di Trento &bull; <a href="https://github.com/DigitalCommonsLab/acque-trentino">Source</a></h4>
 
 <div id="map"></div>
 
@@ -63,7 +66,9 @@ var elements = {
 };
 
 //var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
-var osm = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'),
+var osm = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}),
 	map = new L.Map('map', {
 		zoom: 12,
 		maxZoom: 12,
@@ -76,7 +81,7 @@ var osm = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'),
 
 	var geo;
 
-	var panel = L.control.panelLayers().addTo(map);
+	var panel = L.control.panelLayers(null,null,{compact:true}).addTo(map);
 
 	$.getJSON(url, function(json) {
 
@@ -84,7 +89,7 @@ var osm = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'),
 
 		geo = L.geoJSON(null,{
 				pointToLayer: function(f, latlng) {
-					var m = L.circleMarker(latlng);
+					var m = L.circleMarker(latlng, {radius: 5, style: {fill:true,fillOpacity: 1,opacity:1}});
 					m.bindPopup(JSON.stringify(f.properties));
 					return m;
 				}
@@ -130,7 +135,12 @@ var osm = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'),
 				return [cc[1], cc[0], Math.round(val,4) ];
 			});
 
-			/* CUSTOM gradient COLOR SCALE using chroma.js
+			/*
+			
+			//CUSTOM gradient COLOR SCALE using chroma.js
+
+			//http://gka.github.io/chroma.js/#scale-classes
+
 			var values = _.map(heatPoints, function(p) {
 				return p[2];
 			});
