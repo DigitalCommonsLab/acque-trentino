@@ -5,8 +5,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-panel-layers@1.2.2/dist/leaflet-panel-layers.min.css" />
 
 <style type="text/css">
 #map {
@@ -23,7 +23,8 @@
 <script src="https://unpkg.com/jquery@3.3.1/dist/jquery.js"></script>
 <script src="https://unpkg.com/underscore@1.8.3/underscore.js"></script>
 <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet-src.js"></script>
-<script src="https://unpkg.com/leaflet.timeline@1.2.1/dist/leaflet.timeline.js"></script>
+<!-- <script src="https://unpkg.com/leaflet.timeline@1.2.1/dist/leaflet.timeline.js"></script> -->
+<script src="https://unpkg.com/leaflet-panel-layers@1.2.2/dist/leaflet-panel-layers.src.js"></script>
 <script>
 
 var map = new L.Map('map', {
@@ -33,7 +34,9 @@ var map = new L.Map('map', {
 	});
 
 	var url = "https://api.apify.com/v1/execs/KTFWTkmxttzFs4SgH/results?simplified=1";
-var geo;
+
+	var geo;
+
 	$.getJSON(url, function(json) {
 
 		var data = json[0];
@@ -61,21 +64,21 @@ var geo;
 		});
 
 		var geojson = geo.toGeoJSON();
-
+/*
         var timelineControl = L.timelineSliderControl({
-/*          formatOutput: function(date) {
-          	console.log(date)
-            return new Date(date).toString();
-          }*/
+          //formatOutput: function(date) {
+          //	console.log(date)
+          //  return new Date(date).toString();
+          //}
         });
 
         var timeline = L.timeline(geojson, {
-/*          getInterval: function(f) {
-          	console.log(f.properties.date)
-			return {
-				start: f.properties.date
-			};
-          },*/
+			//getInterval: function(f) {
+			//	console.log(f.properties.date)
+			//return {
+			//	start: f.properties.date
+			//};
+			//},
           formatDate: function(date) {
 			console.log(date)
 			return new Date(date).toString();
@@ -93,7 +96,7 @@ var geo;
         });
         timelineControl.addTo(map)
         timelineControl.addTimelines(timeline);
-        timeline.addTo(map);
+        timeline.addTo(map);*/
 	});
 </script>
 </body>
